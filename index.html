@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethics and Legal Issues in Professional Practice</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&amp;family=Source+Sans+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        :root {
+            --bg-primary: #0f172a;
+            --surface-color: #1e293b;
+            --text-color: #f1f5f9;
+            --primary-action: #3b82f6;
+            --secondary-action: #64748b;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .font-heading { font-family: 'Crimson Pro', serif; }
+        .font-body { font-family: 'Source Sans Pro', sans-serif; }
+        .lesson-content { scroll-behavior: smooth; }
+        .principle-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .principle-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        }
+        .quiz-option {
+            transition: all 0.2s ease;
+        }
+        .quiz-option:hover:not(.selected):not(.disabled) {
+            background: #334155;
+            border-color: #3b82f6;
+        }
+        .quiz-option.selected {
+            background: #1e3a5f;
+            border-color: #3b82f6;
+        }
+        .certificate {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 3px solid #3b82f6;
+            position: relative;
+        }
+        .certificate::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid #3b82f6;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .gold-seal {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .section-nav-item {
+            transition: all 0.2s ease;
+        }
+        .section-nav-item:hover {
+            color: #3b82f6;
+        }
+        .section-nav-item.active {
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full font-body" style="background-color: var(--bg-primary); color: var(--text-color);">
+  <div id="app" class="h-full overflow-auto"><!-- Registration Screen -->
+   <div id="registration-screen" class="min-h-full flex items-center justify-center p-8">
+    <div class="max-w-lg w-full p-8 rounded-2xl" style="background-color: var(--surface-color);">
+     <div class="text-center mb-8">
+      <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+       <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+       </svg>
+      </div>
+      <h1 id="main-title" class="font-heading text-3xl font-bold mb-3" style="color: var(--text-color);">Ethics and Legal Issues in Professional Practice</h1>
+      <p class="text-lg opacity-80">A comprehensive 1.5-hour course on professional ethics, principles, and legal considerations</p>
+     </div>
+     <div class="space-y-4">
+      <div><label for="student-name" class="block text-sm font-semibold mb-2">Enter Your Full Name</label> <input type="text" id="student-name" placeholder="e.g., Juan Dela Cruz" class="w-full px-4 py-3 rounded-lg border-2 border-gray-600 focus:border-blue-500 focus:outline-none transition-colors" style="background-color: var(--bg-primary); color: var(--text-color);">
+       <p id="name-error" class="text-red-400 text-sm mt-2 hidden">Please enter your full name to continue</p>
+      </div><button id="start-lesson-btn" class="w-full py-4 rounded-lg font-bold text-lg transition-all hover:opacity-90" style="background-color: var(--primary-action); color: white;"> Start Course </button>
+     </div>
+     <p class="text-center text-sm mt-6 opacity-60">⚠️ You can only take this course and quiz once. Do not refresh the page.</p>
+    </div>
+   </div><!-- Lesson Screen -->
+   <div id="lesson-screen" class="hidden"><!-- Header -->
+    <header class="sticky top-0 z-50 px-6 py-4 border-b" style="background-color: var(--surface-color); border-color: #334155;">
+     <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <h1 id="header-title" class="font-heading text-xl font-bold">Ethics and Legal Issues</h1>
+      <div class="flex items-center gap-4"><span id="student-display" class="text-sm opacity-80"></span> <button id="start-quiz-btn" class="px-6 py-2 rounded-lg font-semibold transition-all hover:opacity-90" style="background-color: var(--primary-action); color: white;"> Take Quiz </button>
+      </div>
+     </div>
+    </header><!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8"><!-- Course Introduction -->
+     <section class="mb-12 animate-fade-in">
+      <div class="p-8 rounded-2xl" style="background-color: var(--surface-color);">
+       <h2 class="font-heading text-3xl font-bold mb-4">Course Overview</h2>
+       <p class="text-lg opacity-90 mb-6">This comprehensive course covers the fundamental principles of professional ethics and the legal considerations that govern professional practice. Understanding these concepts is essential for maintaining integrity, accountability, and compliance in any professional field.</p>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-lg" style="background-color: var(--bg-primary);">
+         <div class="text-2xl mb-2">
+          📚
+         </div>
+         <h4 class="font-semibold">9 Core Principles</h4>
+         <p class="text-sm opacity-70">Learn the foundational ethical principles</p>
+        </div>
+        <div class="p-4 rounded-lg" style="background-color: var(--bg-primary);">
+         <div class="text-2xl mb-2">
+          ⚖️
+         </div>
+         <h4 class="font-semibold">Legal Framework</h4>
+         <p class="text-sm opacity-70">Understand agreements and IP rights</p>
+        </div>
+        <div class="p-4 rounded-lg" style="background-color: var(--bg-primary);">
+         <div class="text-2xl mb-2">
+          🎓
+         </div>
+         <h4 class="font-semibold">Certification</h4>
+         <p class="text-sm opacity-70">Earn your certificate upon completion</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 1: Principles -->
+     <section id="principles-section" class="mb-12">
+      <div class="mb-8">
+       <h2 class="font-heading text-3xl font-bold mb-2">Part 1: Core Principles of Professional Ethics</h2>
+       <p class="text-lg opacity-80">These nine principles form the foundation of ethical professional conduct and decision-making.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Accountability -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #3b82f6;"><span class="text-2xl">🎯</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">1. Accountability</h3>
+        <p class="opacity-80 mb-4">Taking responsibility for one's actions, decisions, and their consequences. Professionals must be answerable to stakeholders, clients, and the public.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Accept responsibility for outcomes</li>
+         <li>• Acknowledge mistakes openly</li>
+         <li>• Document decisions and rationale</li>
+         <li>• Report to appropriate authorities</li>
+        </ul>
+       </div><!-- Awareness -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #10b981;"><span class="text-2xl">👁️</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">2. Awareness</h3>
+        <p class="opacity-80 mb-4">Being informed and conscious of professional standards, regulations, and the broader impact of one's work on society and the environment.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Stay current with industry standards</li>
+         <li>• Understand regulatory requirements</li>
+         <li>• Recognize potential impacts</li>
+         <li>• Monitor changes in the field</li>
+        </ul>
+       </div><!-- Ethics -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #8b5cf6;"><span class="text-2xl">⚖️</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">3. Ethics</h3>
+        <p class="opacity-80 mb-4">Adhering to moral principles and professional codes of conduct. Making decisions based on what is right rather than what is merely legal or profitable.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Follow professional codes</li>
+         <li>• Make principled decisions</li>
+         <li>• Maintain honesty and integrity</li>
+         <li>• Avoid conflicts of interest</li>
+        </ul>
+       </div><!-- Multidisciplinary -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #f59e0b;"><span class="text-2xl">🔗</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">4. Multidisciplinary</h3>
+        <p class="opacity-80 mb-4">Collaborating across different fields and disciplines to achieve comprehensive solutions. Recognizing that complex problems require diverse expertise.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Collaborate with other experts</li>
+         <li>• Value diverse perspectives</li>
+         <li>• Integrate knowledge from multiple fields</li>
+         <li>• Build cross-functional teams</li>
+        </ul>
+       </div><!-- Proportionality -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #ef4444;"><span class="text-2xl">⚖️</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">5. Proportionality</h3>
+        <p class="opacity-80 mb-4">Ensuring that actions and responses are appropriate and balanced relative to the situation at hand. Avoiding excessive or insufficient measures.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Balance costs and benefits</li>
+         <li>• Scale responses appropriately</li>
+         <li>• Consider resource allocation</li>
+         <li>• Avoid overreaction or negligence</li>
+        </ul>
+       </div><!-- Integration -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #06b6d4;"><span class="text-2xl">🧩</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">6. Integration</h3>
+        <p class="opacity-80 mb-4">Incorporating ethical considerations into all aspects of professional work, not treating ethics as a separate concern but as an integral part of every decision.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Embed ethics in processes</li>
+         <li>• Align systems and values</li>
+         <li>• Create cohesive approaches</li>
+         <li>• Connect theory with practice</li>
+        </ul>
+       </div><!-- Timeliness -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #ec4899;"><span class="text-2xl">⏱️</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">7. Timeliness</h3>
+        <p class="opacity-80 mb-4">Acting promptly and meeting deadlines. Recognizing that delayed actions can lead to missed opportunities or increased harm.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Respond promptly to issues</li>
+         <li>• Meet established deadlines</li>
+         <li>• Prioritize urgent matters</li>
+         <li>• Prevent delays in critical processes</li>
+        </ul>
+       </div><!-- Assessment -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #84cc16;"><span class="text-2xl">📊</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">8. Assessment</h3>
+        <p class="opacity-80 mb-4">Regularly evaluating actions, outcomes, and processes to ensure continuous improvement and compliance with ethical standards.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Conduct regular evaluations</li>
+         <li>• Measure against standards</li>
+         <li>• Identify areas for improvement</li>
+         <li>• Use evidence-based methods</li>
+        </ul>
+       </div><!-- Equity -->
+       <div class="principle-card p-6 rounded-xl" style="background-color: var(--surface-color);">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: #6366f1;"><span class="text-2xl">🤝</span>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3">9. Equity</h3>
+        <p class="opacity-80 mb-4">Ensuring fairness and justice in all professional dealings. Treating all stakeholders with equal respect and providing equal opportunities.</p>
+        <ul class="text-sm space-y-2 opacity-70">
+         <li>• Ensure fair treatment for all</li>
+         <li>• Address systemic inequalities</li>
+         <li>• Promote inclusive practices</li>
+         <li>• Distribute resources fairly</li>
+        </ul>
+       </div>
+      </div>
+     </section><!-- Section 2: Ethics and Legal Issues -->
+     <section id="legal-section" class="mb-12">
+      <div class="mb-8">
+       <h2 class="font-heading text-3xl font-bold mb-2">Part 2: Ethics and Legal Issues</h2>
+       <p class="text-lg opacity-80">Understanding the legal framework that governs professional practice is essential for ethical conduct.</p>
+      </div><!-- Agreements Section -->
+      <div class="mb-8 p-8 rounded-2xl" style="background-color: var(--surface-color);">
+       <h3 class="font-heading text-2xl font-bold mb-6 flex items-center gap-3"><span class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--primary-action);">📋</span> Legal Agreements</h3>
+       <div class="grid md:grid-cols-2 gap-6"><!-- Confidentiality -->
+        <div class="p-6 rounded-xl" style="background-color: var(--bg-primary);">
+         <h4 class="font-bold text-lg mb-3 text-blue-400">Confidentiality Agreements (NDA)</h4>
+         <p class="opacity-80 mb-4">A Non-Disclosure Agreement (NDA) is a legally binding contract that establishes a confidential relationship between parties.</p>
+         <div class="space-y-2 text-sm">
+          <p><strong>Purpose:</strong> Protect sensitive information from unauthorized disclosure</p>
+          <p><strong>Elements:</strong> Definition of confidential information, obligations, duration, exclusions</p>
+          <p><strong>Types:</strong> Unilateral, Bilateral, Multilateral</p>
+          <p><strong>Breach consequences:</strong> Legal action, damages, injunctions</p>
+         </div>
+        </div><!-- Trade Secrets -->
+        <div class="p-6 rounded-xl" style="background-color: var(--bg-primary);">
+         <h4 class="font-bold text-lg mb-3 text-green-400">Trade Secrets</h4>
+         <p class="opacity-80 mb-4">Trade secrets are proprietary information that provides a competitive advantage and is kept confidential.</p>
+         <div class="space-y-2 text-sm">
+          <p><strong>Examples:</strong> Formulas, processes, customer lists, marketing strategies</p>
+          <p><strong>Protection:</strong> No registration required, but must maintain secrecy</p>
+          <p><strong>Duration:</strong> Protected as long as secrecy is maintained</p>
+          <p><strong>Laws:</strong> Defend Trade Secrets Act, UTSA</p>
+         </div>
+        </div><!-- Discovery -->
+        <div class="p-6 rounded-xl" style="background-color: var(--bg-primary);">
+         <h4 class="font-bold text-lg mb-3 text-purple-400">Discovery Agreements</h4>
+         <p class="opacity-80 mb-4">Legal process where parties exchange relevant information before trial in civil litigation.</p>
+         <div class="space-y-2 text-sm">
+          <p><strong>Types:</strong> Interrogatories, depositions, document requests, admissions</p>
+          <p><strong>Purpose:</strong> Gather evidence, narrow issues, avoid surprises at trial</p>
+          <p><strong>Obligations:</strong> Duty to preserve, produce, and not spoliate evidence</p>
+          <p><strong>Protective orders:</strong> Limit disclosure of sensitive information</p>
+         </div>
+        </div><!-- Non-Compete -->
+        <div class="p-6 rounded-xl" style="background-color: var(--bg-primary);">
+         <h4 class="font-bold text-lg mb-3 text-orange-400">Non-Compete Agreements</h4>
+         <p class="opacity-80 mb-4">Contracts restricting employees from competing with employers after employment ends.</p>
+         <div class="space-y-2 text-sm">
+          <p><strong>Restrictions:</strong> Time period, geographic area, scope of activities</p>
+          <p><strong>Enforceability:</strong> Varies by jurisdiction; must be reasonable</p>
+          <p><strong>Consideration:</strong> Must offer something of value (job, raise, training)</p>
+          <p><strong>Exceptions:</strong> Some states ban or heavily restrict them</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Intellectual Property Section -->
+      <div class="mb-8 p-8 rounded-2xl" style="background-color: var(--surface-color);">
+       <h3 class="font-heading text-2xl font-bold mb-6 flex items-center gap-3"><span class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--primary-action);">💡</span> Intellectual Property and Fair Use</h3>
+       <div class="mb-6 p-6 rounded-xl" style="background-color: var(--bg-primary);">
+        <h4 class="font-bold text-lg mb-3">What is Intellectual Property?</h4>
+        <p class="opacity-80 mb-4">Intellectual Property (IP) refers to creations of the mind: inventions, literary and artistic works, symbols, names, images, and designs used in commerce. IP is protected by law through patents, copyrights, trademarks, and trade secrets.</p>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+         <div>
+          <p class="font-semibold text-blue-400">Categories of IP:</p>
+          <ul class="list-disc list-inside opacity-80 mt-2">
+           <li>Industrial Property (patents, trademarks)</li>
+           <li>Copyright (artistic/literary works)</li>
+           <li>Trade Secrets</li>
+           <li>Geographical Indications</li>
+          </ul>
+         </div>
+         <div>
+          <p class="font-semibold text-blue-400">Why IP Matters:</p>
+          <ul class="list-disc list-inside opacity-80 mt-2">
+           <li>Encourages innovation</li>
+           <li>Protects creators' rights</li>
+           <li>Enables economic growth</li>
+           <li>Promotes fair competition</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-xl" style="background-color: var(--bg-primary);">
+        <h4 class="font-bold text-lg mb-3">Fair Use Doctrine</h4>
+        <p class="opacity-80 mb-4">Fair use is a legal doctrine that permits limited use of copyrighted material without acquiring permission from the rights holders. It is determined by four factors:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="p-4 rounded-lg border border-gray-700">
+          <p class="font-semibold text-green-400">1. Purpose and Character</p>
+          <p class="text-sm opacity-70 mt-1">Is the use transformative? Commercial or educational?</p>
+         </div>
+         <div class="p-4 rounded-lg border border-gray-700">
+          <p class="font-semibold text-green-400">2. Nature of the Work</p>
+          <p class="text-sm opacity-70 mt-1">Is the original work factual or creative?</p>
+         </div>
+         <div class="p-4 rounded-lg border border-gray-700">
+          <p class="font-semibold text-green-400">3. Amount Used</p>
+          <p class="text-sm opacity-70 mt-1">How much of the work was used? Was it the "heart" of the work?</p>
+         </div>
+         <div class="p-4 rounded-lg border border-gray-700">
+          <p class="font-semibold text-green-400">4. Market Effect</p>
+          <p class="text-sm opacity-70 mt-1">Does the use harm the market for the original?</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Patents, Trademarks, Copyrights -->
+      <div class="p-8 rounded-2xl" style="background-color: var(--surface-color);">
+       <h3 class="font-heading text-2xl font-bold mb-6 flex items-center gap-3"><span class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--primary-action);">🏛️</span> Patents, Trademarks, and Copyrights</h3>
+       <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+         <thead>
+          <tr class="border-b border-gray-700">
+           <th class="text-left py-4 px-4 font-bold">Aspect</th>
+           <th class="text-left py-4 px-4 font-bold text-blue-400">Patents</th>
+           <th class="text-left py-4 px-4 font-bold text-green-400">Trademarks</th>
+           <th class="text-left py-4 px-4 font-bold text-purple-400">Copyrights</th>
+          </tr>
+         </thead>
+         <tbody class="opacity-80">
+          <tr class="border-b border-gray-800">
+           <td class="py-4 px-4 font-semibold">What it Protects</td>
+           <td class="py-4 px-4">Inventions, processes, designs, new useful improvements</td>
+           <td class="py-4 px-4">Brand names, logos, slogans, product packaging</td>
+           <td class="py-4 px-4">Original works of authorship (books, music, art, software)</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+           <td class="py-4 px-4 font-semibold">Duration</td>
+           <td class="py-4 px-4">20 years (utility), 15 years (design)</td>
+           <td class="py-4 px-4">Indefinite (with continued use and renewal)</td>
+           <td class="py-4 px-4">Life of author + 70 years (or 95-120 years for works for hire)</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+           <td class="py-4 px-4 font-semibold">Registration</td>
+           <td class="py-4 px-4">Required (Patent Office)</td>
+           <td class="py-4 px-4">Optional but recommended (USPTO)</td>
+           <td class="py-4 px-4">Automatic upon creation (registration strengthens rights)</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+           <td class="py-4 px-4 font-semibold">Symbol</td>
+           <td class="py-4 px-4">Pat., Patent No.</td>
+           <td class="py-4 px-4">™ (unregistered), ® (registered)</td>
+           <td class="py-4 px-4">©</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+           <td class="py-4 px-4 font-semibold">Rights Granted</td>
+           <td class="py-4 px-4">Exclusive right to make, use, sell the invention</td>
+           <td class="py-4 px-4">Exclusive right to use mark in commerce</td>
+           <td class="py-4 px-4">Exclusive right to reproduce, distribute, perform, display</td>
+          </tr>
+          <tr>
+           <td class="py-4 px-4 font-semibold">Infringement</td>
+           <td class="py-4 px-4">Making, using, selling without permission</td>
+           <td class="py-4 px-4">Using confusingly similar marks</td>
+           <td class="py-4 px-4">Copying, distributing without permission</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <div class="grid md:grid-cols-3 gap-4 mt-6">
+        <div class="p-4 rounded-lg border-l-4 border-blue-500" style="background-color: var(--bg-primary);">
+         <h5 class="font-bold text-blue-400 mb-2">Patent Types</h5>
+         <ul class="text-sm opacity-70 space-y-1">
+          <li>• Utility Patents (most common)</li>
+          <li>• Design Patents (ornamental)</li>
+          <li>• Plant Patents (new plant varieties)</li>
+         </ul>
+        </div>
+        <div class="p-4 rounded-lg border-l-4 border-green-500" style="background-color: var(--bg-primary);">
+         <h5 class="font-bold text-green-400 mb-2">Trademark Strength</h5>
+         <ul class="text-sm opacity-70 space-y-1">
+          <li>• Fanciful (strongest)</li>
+          <li>• Arbitrary</li>
+          <li>• Suggestive</li>
+          <li>• Descriptive (weakest)</li>
+         </ul>
+        </div>
+        <div class="p-4 rounded-lg border-l-4 border-purple-500" style="background-color: var(--bg-primary);">
+         <h5 class="font-bold text-purple-400 mb-2">Copyright Scope</h5>
+         <ul class="text-sm opacity-70 space-y-1">
+          <li>• Literary works</li>
+          <li>• Musical compositions</li>
+          <li>• Software code</li>
+          <li>• Architectural works</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </section><!-- Key Takeaways -->
+     <section class="mb-12 p-8 rounded-2xl border-2 border-blue-500" style="background-color: var(--surface-color);">
+      <h3 class="font-heading text-2xl font-bold mb-6">📝 Key Takeaways</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <h4 class="font-bold text-blue-400 mb-3">Principles to Remember:</h4>
+        <ul class="space-y-2 opacity-80">
+         <li>✓ Accountability - Own your actions and decisions</li>
+         <li>✓ Awareness - Stay informed and conscious</li>
+         <li>✓ Ethics - Follow moral principles</li>
+         <li>✓ Multidisciplinary - Collaborate across fields</li>
+         <li>✓ Proportionality - Balance your responses</li>
+         <li>✓ Integration - Embed ethics in everything</li>
+         <li>✓ Timeliness - Act promptly</li>
+         <li>✓ Assessment - Evaluate continuously</li>
+         <li>✓ Equity - Ensure fairness for all</li>
+        </ul>
+       </div>
+       <div>
+        <h4 class="font-bold text-green-400 mb-3">Legal Essentials:</h4>
+        <ul class="space-y-2 opacity-80">
+         <li>✓ NDAs protect confidential information</li>
+         <li>✓ Trade secrets require maintained secrecy</li>
+         <li>✓ Non-competes must be reasonable</li>
+         <li>✓ Patents protect inventions (20 years)</li>
+         <li>✓ Trademarks protect brand identity</li>
+         <li>✓ Copyrights protect creative works</li>
+         <li>✓ Fair use has four determining factors</li>
+        </ul>
+       </div>
+      </div>
+     </section><!-- Quiz CTA -->
+     <section class="text-center p-8 rounded-2xl" style="background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);">
+      <h3 class="font-heading text-2xl font-bold mb-4">Ready to Test Your Knowledge?</h3>
+      <p class="opacity-80 mb-6">Complete the 20-question quiz to earn your certificate of completion.</p><button id="start-quiz-btn-2" class="px-8 py-4 rounded-lg font-bold text-lg transition-all hover:opacity-90" style="background-color: var(--primary-action); color: white;"> Start Quiz Now </button>
+     </section>
+    </main>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="hidden min-h-full">
+    <header class="sticky top-0 z-50 px-6 py-4 border-b" style="background-color: var(--surface-color); border-color: #334155;">
+     <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <h1 class="font-heading text-xl font-bold">Knowledge Assessment</h1>
+      <div class="flex items-center gap-4"><span id="quiz-progress" class="text-sm opacity-80">Question 1 of 20</span>
+       <div class="w-32 h-2 rounded-full overflow-hidden" style="background-color: var(--bg-primary);">
+        <div id="progress-bar" class="h-full transition-all duration-300" style="background-color: var(--primary-action); width: 5%;"></div>
+       </div>
+      </div>
+     </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-8">
+     <div id="quiz-container" class="p-8 rounded-2xl" style="background-color: var(--surface-color);">
+      <div id="question-container"><!-- Questions will be dynamically inserted -->
+      </div>
+      <div class="flex justify-between mt-8"><button id="prev-btn" class="px-6 py-3 rounded-lg font-semibold transition-all disabled:opacity-50" style="background-color: var(--secondary-action); color: white;" disabled> ← Previous </button> <button id="next-btn" class="px-6 py-3 rounded-lg font-semibold transition-all disabled:opacity-50" style="background-color: var(--primary-action); color: white;" disabled> Next → </button> <button id="submit-quiz-btn" class="hidden px-6 py-3 rounded-lg font-semibold transition-all" style="background-color: #10b981; color: white;"> Submit Quiz </button>
+      </div>
+     </div>
+    </main>
+   </div><!-- Certificate Screen -->
+   <div id="certificate-screen" class="hidden min-h-full flex items-center justify-center p-8">
+    <div class="w-full max-w-3xl">
+     <div class="certificate p-12 rounded-2xl text-center">
+      <div class="mb-6">
+       <div class="gold-seal mx-auto mb-4">
+        <svg class="w-10 h-10 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+       </div>
+       <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Certificate of Completion</p>
+       <h2 class="font-heading text-3xl font-bold" style="color: var(--primary-action);">Ethics and Legal Issues in Professional Practice</h2>
+      </div>
+      <p class="text-lg opacity-80 mb-2">This certifies that</p>
+      <h3 id="certificate-name" class="font-heading text-4xl font-bold mb-4" style="color: #fbbf24;"></h3>
+      <p class="text-lg opacity-80 mb-6">has successfully completed the course and assessment</p>
+      <div class="inline-block px-8 py-4 rounded-xl mb-6" style="background-color: var(--bg-primary);">
+       <p class="text-sm opacity-60 mb-1">Final Score</p>
+       <p id="certificate-score" class="text-3xl font-bold" style="color: var(--primary-action);"></p>
+      </div>
+      <div class="pt-6 border-t border-gray-700">
+       <p id="certificate-date" class="text-sm opacity-60"></p>
+       <p id="certificate-instructor" class="text-sm font-semibold mt-2"></p>
+      </div>
+     </div>
+     <div class="text-center mt-6">
+      <p class="text-sm opacity-60">Thank you for completing this course!</p>
+     </div>
+    </div>
+   </div><!-- Already Completed Screen -->
+   <div id="completed-screen" class="hidden min-h-full flex items-center justify-center p-8">
+    <div class="max-w-lg w-full p-8 rounded-2xl text-center" style="background-color: var(--surface-color);">
+     <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style="background-color: #10b981;">
+      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+     </div>
+     <h2 class="font-heading text-2xl font-bold mb-4">Course Already Completed</h2>
+     <p class="opacity-80 mb-6">You have already completed this course and quiz. Each student can only take the assessment once.</p>
+     <div class="p-4 rounded-lg" style="background-color: var(--bg-primary);">
+      <p class="text-sm opacity-60 mb-1">Your Previous Score</p>
+      <p id="previous-score" class="text-2xl font-bold" style="color: var(--primary-action);"></p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            course_title: 'Ethics and Legal Issues in Professional Practice',
+            instructor_name: 'Course Instructor'
+        };
+
+        // Quiz Questions
+        const quizQuestions = [
+            {
+                question: "Which principle emphasizes taking responsibility for one's actions and decisions?",
+                options: ["Awareness", "Accountability", "Integration", "Timeliness"],
+                correct: 1
+            },
+            {
+                question: "What does NDA stand for?",
+                options: ["New Development Agreement", "Non-Disclosure Agreement", "National Data Association", "Non-Distribution Act"],
+                correct: 1
+            },
+            {
+                question: "Which principle involves collaborating across different fields and disciplines?",
+                options: ["Integration", "Equity", "Multidisciplinary", "Proportionality"],
+                correct: 2
+            },
+            {
+                question: "How long does a utility patent typically last?",
+                options: ["10 years", "15 years", "20 years", "Indefinitely"],
+                correct: 2
+            },
+            {
+                question: "Which symbol indicates a registered trademark?",
+                options: ["©", "™", "®", "Pat."],
+                correct: 2
+            },
+            {
+                question: "What principle ensures that actions are appropriate and balanced relative to the situation?",
+                options: ["Assessment", "Proportionality", "Timeliness", "Ethics"],
+                correct: 1
+            },
+            {
+                question: "Trade secrets are protected for how long?",
+                options: ["20 years", "70 years", "As long as secrecy is maintained", "15 years"],
+                correct: 2
+            },
+            {
+                question: "Which is NOT a factor in determining fair use?",
+                options: ["Purpose and character of use", "Nature of the copyrighted work", "The author's nationality", "Effect on the market"],
+                correct: 2
+            },
+            {
+                question: "The principle of Equity focuses on:",
+                options: ["Acting promptly", "Ensuring fairness and justice", "Regular evaluation", "Maintaining secrecy"],
+                correct: 1
+            },
+            {
+                question: "What type of agreement restricts employees from competing with employers after leaving?",
+                options: ["Confidentiality Agreement", "Discovery Agreement", "Non-Compete Agreement", "Trade Secret Agreement"],
+                correct: 2
+            },
+            {
+                question: "Which principle involves being informed about professional standards and regulations?",
+                options: ["Accountability", "Awareness", "Ethics", "Assessment"],
+                correct: 1
+            },
+            {
+                question: "Copyright protection begins:",
+                options: ["When registered with the government", "Upon creation of the work", "After 5 years of publication", "When the © symbol is added"],
+                correct: 1
+            },
+            {
+                question: "The Timeliness principle emphasizes:",
+                options: ["Fair treatment for all", "Acting promptly and meeting deadlines", "Embedding ethics in processes", "Taking responsibility"],
+                correct: 1
+            },
+            {
+                question: "Which trademark strength category is the strongest?",
+                options: ["Descriptive", "Suggestive", "Arbitrary", "Fanciful"],
+                correct: 3
+            },
+            {
+                question: "The Assessment principle involves:",
+                options: ["Collaborating with experts", "Regularly evaluating actions and outcomes", "Maintaining confidentiality", "Acting proportionally"],
+                correct: 1
+            },
+            {
+                question: "What is the duration of copyright for works made for hire?",
+                options: ["20 years", "Life of author + 70 years", "95-120 years", "Indefinite"],
+                correct: 2
+            },
+            {
+                question: "The Integration principle requires:",
+                options: ["Keeping ethics separate from work", "Incorporating ethical considerations into all aspects of work", "Only following legal requirements", "Delegating ethical decisions"],
+                correct: 1
+            },
+            {
+                question: "Which is an example of a trade secret?",
+                options: ["A company logo", "A patented invention", "A secret formula", "A copyrighted book"],
+                correct: 2
+            },
+            {
+                question: "The Ethics principle involves:",
+                options: ["Only following laws", "Adhering to moral principles and professional codes", "Maximizing profits", "Avoiding all risks"],
+                correct: 1
+            },
+            {
+                question: "Design patents last for:",
+                options: ["10 years", "15 years", "20 years", "25 years"],
+                correct: 1
+            }
+        ];
+
+        // Application State
+        let currentState = {
+            studentName: '',
+            currentQuestion: 0,
+            answers: new Array(20).fill(null),
+            quizCompleted: false,
+            score: 0
+        };
+
+        let completedStudents = [];
+        let currentSessionId = null;
+
+        // Data Handler for SDK
+        const dataHandler = {
+            onDataChanged(data) {
+                completedStudents = data;
+                checkIfAlreadyCompleted();
+            }
+        };
+
+        // Initialize SDKs
+        async function initializeApp() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (config) => {
+                        const title = config.course_title || defaultConfig.course_title;
+                        const instructor = config.instructor_name || defaultConfig.instructor_name;
+                        
+                        const mainTitle = document.getElementById('main-title');
+                        const headerTitle = document.getElementById('header-title');
+                        const certInstructor = document.getElementById('certificate-instructor');
+                        
+                        if (mainTitle) mainTitle.textContent = title;
+                        if (headerTitle) headerTitle.textContent = title;
+                        if (certInstructor) certInstructor.textContent = `Instructor: ${instructor}`;
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ['course_title', config.course_title || defaultConfig.course_title],
+                        ['instructor_name', config.instructor_name || defaultConfig.instructor_name]
+                    ])
+                });
+            }
+
+            // Initialize Data SDK
+            if (window.dataSdk) {
+                const result = await window.dataSdk.init(dataHandler);
+                if (!result.isOk) {
+                    console.error('Failed to initialize data SDK');
+                }
+            }
+
+            // Generate session ID
+            currentSessionId = generateSessionId();
+            
+            // Check localStorage for current session
+            const savedSession = localStorage.getItem('quiz_session');
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                if (session.completed) {
+                    showCompletedScreen(session.score, session.total);
+                    return;
+                }
+            }
+
+            setupEventListeners();
+        }
+
+        function generateSessionId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function checkIfAlreadyCompleted() {
+            const savedSession = localStorage.getItem('quiz_session');
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                if (session.completed) {
+                    showCompletedScreen(session.score, session.total);
+                }
+            }
+        }
+
+        function showCompletedScreen(score, total) {
+            document.getElementById('registration-screen').classList.add('hidden');
+            document.getElementById('lesson-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('certificate-screen').classList.add('hidden');
+            document.getElementById('completed-screen').classList.remove('hidden');
+            document.getElementById('previous-score').textContent = `${score}/${total} (${Math.round(score/total*100)}%)`;
+        }
+
+        function setupEventListeners() {
+            // Prevent page refresh/navigation
+            window.addEventListener('beforeunload', (e) => {
+                const savedSession = localStorage.getItem('quiz_session');
+                if (savedSession) {
+                    const session = JSON.parse(savedSession);
+                    if (session.started && !session.completed) {
+                        e.preventDefault();
+                        e.returnValue = '';
+                    }
+                }
+            });
+
+            // Start lesson button
+            document.getElementById('start-lesson-btn').addEventListener('click', startLesson);
+
+            // Start quiz buttons
+            document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+            document.getElementById('start-quiz-btn-2').addEventListener('click', startQuiz);
+
+            // Quiz navigation
+            document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            document.getElementById('submit-quiz-btn').addEventListener('click', submitQuiz);
+
+            // Enter key for name input
+            document.getElementById('student-name').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') startLesson();
+            });
+        }
+
+        function startLesson() {
+            const nameInput = document.getElementById('student-name');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                document.getElementById('name-error').classList.remove('hidden');
+                nameInput.focus();
+                return;
+            }
+
+            document.getElementById('name-error').classList.add('hidden');
+            currentState.studentName = name;
+
+            // Save session start
+            localStorage.setItem('quiz_session', JSON.stringify({
+                studentName: name,
+                started: true,
+                completed: false,
+                sessionId: currentSessionId
+            }));
+
+            document.getElementById('student-display').textContent = `Student: ${name}`;
+            document.getElementById('registration-screen').classList.add('hidden');
+            document.getElementById('lesson-screen').classList.remove('hidden');
+        }
+
+        function startQuiz() {
+            document.getElementById('lesson-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = quizQuestions[currentState.currentQuestion];
+            const container = document.getElementById('question-container');
+            
+            container.innerHTML = `
+                <div class="animate-fade-in">
+                    <p class="text-sm opacity-60 mb-2">Question ${currentState.currentQuestion + 1} of ${quizQuestions.length}</p>
+                    <h3 class="font-heading text-2xl font-bold mb-6">${question.question}</h3>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <button class="quiz-option w-full text-left p-4 rounded-lg border-2 transition-all ${currentState.answers[currentState.currentQuestion] === index ? 'selected' : ''}" 
+                                    style="border-color: ${currentState.answers[currentState.currentQuestion] === index ? '#3b82f6' : '#374151'}; background-color: ${currentState.answers[currentState.currentQuestion] === index ? '#1e3a5f' : 'var(--bg-primary)'};"
+                                    data-index="${index}">
+                                <span class="inline-block w-8 h-8 rounded-full text-center leading-8 mr-3" style="background-color: var(--secondary-action);">
+                                    ${String.fromCharCode(65 + index)}
+                                </span>
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Add click handlers to options
+            container.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index)));
+            });
+
+            updateNavigation();
+            updateProgress();
+        }
+
+        function selectAnswer(index) {
+            currentState.answers[currentState.currentQuestion] = index;
+            renderQuestion();
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+
+            prevBtn.disabled = currentState.currentQuestion === 0;
+            
+            const hasAnswer = currentState.answers[currentState.currentQuestion] !== null;
+            
+            if (currentState.currentQuestion === quizQuestions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                submitBtn.disabled = !hasAnswer;
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+                nextBtn.disabled = !hasAnswer;
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentState.currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('quiz-progress').textContent = `Question ${currentState.currentQuestion + 1} of ${quizQuestions.length}`;
+        }
+
+        function prevQuestion() {
+            if (currentState.currentQuestion > 0) {
+                currentState.currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentState.currentQuestion < quizQuestions.length - 1 && currentState.answers[currentState.currentQuestion] !== null) {
+                currentState.currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        async function submitQuiz() {
+            // Calculate score
+            let score = 0;
+            currentState.answers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    score++;
+                }
+            });
+
+            currentState.score = score;
+            currentState.quizCompleted = true;
+
+            // Save to localStorage
+            localStorage.setItem('quiz_session', JSON.stringify({
+                studentName: currentState.studentName,
+                started: true,
+                completed: true,
+                score: score,
+                total: quizQuestions.length,
+                sessionId: currentSessionId
+            }));
+
+            // Save to Data SDK
+            if (window.dataSdk) {
+                const submitBtn = document.getElementById('submit-quiz-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Saving...';
+
+                const result = await window.dataSdk.create({
+                    student_name: currentState.studentName,
+                    score: score,
+                    total_questions: quizQuestions.length,
+                    completed_at: new Date().toISOString(),
+                    answers: JSON.stringify(currentState.answers)
+                });
+
+                if (!result.isOk) {
+                    console.error('Failed to save quiz results');
+                }
+            }
+
+            showCertificate();
+        }
+
+        function showCertificate() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('certificate-screen').classList.remove('hidden');
+
+            document.getElementById('certificate-name').textContent = currentState.studentName;
+            document.getElementById('certificate-score').textContent = `${currentState.score}/${quizQuestions.length} (${Math.round(currentState.score/quizQuestions.length*100)}%)`;
+            document.getElementById('certificate-date').textContent = new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            const config = window.elementSdk?.config || defaultConfig;
+            document.getElementById('certificate-instructor').textContent = `Instructor: ${config.instructor_name || defaultConfig.instructor_name}`;
+        }
+
+        // Initialize on load
+        initializeApp();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d958a41443dfebd',t:'MTc3MzAxMTcwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
